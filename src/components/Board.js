@@ -4,9 +4,8 @@ const Board = ({ children }) => {
   return <BoardContainer>{children}</BoardContainer>;
 };
 const BoardContainer = styled.div`
-  background-color: rebeccapurple;
-  /* width: 100%; */
-  /* height: 800px; */
+  max-width: 1200px;
+  min-width: 200px;
 `;
 
 export default Board;
