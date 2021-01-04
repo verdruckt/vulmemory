@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 
-export default function Cards({ imgSrc }) {
+export default function Cards({ imgSrc, handleClick }) {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <CardContainer activated={clicked} onClick={() => setClicked(!clicked)}>
+    <CardContainer
+      activated={clicked}
+      onClick={() => {
+        handleClick();
+        setClicked(!clicked);
+      }}
+    >
       <div activated={clicked} />
       <img src={imgSrc} alt="Bild" />
     </CardContainer>
