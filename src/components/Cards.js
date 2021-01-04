@@ -18,7 +18,7 @@ const CardContainer = styled.div`
   background-color: black;
   position: relative;
   div {
-    transition: all 1s ease-in-out;
+    /* transition: all 1s ease-in-out; */
     box-sizing: border-box;
     border: 5px dotted gold;
     background-color: ${(props) =>

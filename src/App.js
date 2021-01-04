@@ -4,6 +4,7 @@ import React, { Fragment } from "react";
 
 import Deck from "./components/Deck";
 import GlobalStyle from "./GlobalStyles";
+import Background from "./components/Background";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Deck></Deck>
         </Board>
       </Wrapper>
+      <Background />
     </Fragment>
   );
 }
