@@ -13,8 +13,8 @@ export default function Cards({ imgSrc }) {
 }
 
 const CardContainer = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   background-color: black;
   position: relative;
   div {
