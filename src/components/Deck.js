@@ -47,6 +47,7 @@ export default function Deck() {
 
 const DeckContainer = styled.div`
   display: grid;
+  align-items: center;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 `;

@@ -13,13 +13,16 @@ export default function Cards({ imgSrc }) {
 }
 
 const CardContainer = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   background-color: black;
   position: relative;
   div {
-    background-color: ${(props) => (props.activated ? "transparent" : "green")};
-    /*background-color: ${(props) => console.log(props.activated)};*/
+    /* transition: all 1s ease-in-out; */
+    box-sizing: border-box;
+    border: 5px dotted gold;
+    background-color: ${(props) =>
+      props.activated ? "transparent" : "#de37e1"};
     width: 100%;
     height: 100%;
     position: absolute;
