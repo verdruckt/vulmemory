@@ -10,17 +10,36 @@ import pic7 from "../assets/7.jpg";
 import pic8 from "../assets/8.jpg";
 import Cards from "./Cards";
 
+const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+
 export default function Deck() {
-  const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
-  const pics2 = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+  function generateDeck(cardArray) {
+    const halfArr = cardArray.map((img, id) => ({
+      id,
+      src: img,
+      clicked: false,
+    }));
+
+    const objArr = [...halfArr, ...halfArr];
+    return randomize(objArr);
+  }
+
+  function randomize(Arr) {
+    const result = [];
+    while (Arr.length > 0) {
+      const num = Math.floor(Math.random() * Arr.length);
+      result.push(...Arr.splice(num, 1));
+    }
+    console.log("pieps", result);
+    return result;
+  }
+
+  const deckObj = generateDeck(pics);
 
   return (
     <DeckContainer>
-      {pics.map((pic, index) => (
-        <Cards imgSrc={pic} key={index} />
-      ))}
-      {pics2.map((pic, index) => (
-        <Cards imgSrc={pic} key={index} />
+      {deckObj.map((picObj, index) => (
+        <Cards imgSrc={picObj.src} key={index} />
       ))}
     </DeckContainer>
   );
