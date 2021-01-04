@@ -14,20 +14,28 @@ import Cards from "./Cards";
 const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
 const deckObj = generateDeck(pics);
 export default function Deck() {
+  const [memoryDeck, setMemoryDeck] = useState(deckObj);
   const [memory, setMemory] = useState([]);
+  const [counter, setCounter] = useState(1);
 
   function handleClick(picObj) {
-    let counter = 0;
-    console.log(picObj.id);
-    if (counter <= 2) {
-      counter++;
+    if (counter === 0) {
       setMemory([...memory, picObj.id]);
-    } else {
+      setMemoryDeck([...memoryDeck, !picObj.clicked]);
+      setCounter(counter + 1);
+    }
+
+    if (counter === 1) {
+      setMemory([...memory, picObj.id]);
+
       const match = calculateMatch(memory[0], memory[1]);
-      console.log(match);
+      console.log({ match });
+      setCounter(1);
       setMemory([]);
     }
+    console.log({ memoryDeck });
   }
+
   return (
     <DeckContainer>
       {deckObj.map((picObj, index) => (
@@ -35,6 +43,7 @@ export default function Deck() {
           handleClick={() => handleClick(picObj)}
           imgSrc={picObj.src}
           key={index}
+          memLen={memory.length}
         />
       ))}
     </DeckContainer>
@@ -46,6 +55,7 @@ function generateDeck(cardArray) {
     id,
     src: img,
     clicked: false,
+    match: false,
   }));
 
   const objArr = [...halfArr, ...halfArr];
