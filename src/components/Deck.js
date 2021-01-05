@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import pic1 from "../assets/1.jpg";
-import pic2 from "../assets/2.jpg";
-import pic3 from "../assets/3.jpg";
-import pic4 from "../assets/4.jpg";
-import pic5 from "../assets/5.jpg";
-import pic6 from "../assets/6.jpg";
-import pic7 from "../assets/7.jpg";
-import pic8 from "../assets/8.jpg";
+import pic2 from "../assets/vulvis/2.jpg";
+import pic3 from "../assets/vulvis/3.jpg";
+import pic1 from "../assets/vulvis/1.jpg";
+import pic4 from "../assets/vulvis/4.jpg";
+import pic5 from "../assets/vulvis/5.jpg";
+import pic6 from "../assets/vulvis/6.jpg";
+import pic7 from "../assets/vulvis/7.jpg";
+import pic8 from "../assets/vulvis/8.jpg";
 import calculateMatch from "../lib/calculateMatch";
 import Cards from "./Cards";
 
@@ -18,6 +18,8 @@ export default function Deck() {
   const [matchArr, setMatchArr] = useState([]);
   const [counter, setCounter] = useState(0);
   const [checked, setChecked] = useState([]);
+  const [matched, setMatched] = useState([]);
+  const [win, setWin] = useState(false);
 
   async function handleClick(picObj) {
     setMatchArr([...matchArr, picObj.id]);
@@ -32,27 +34,62 @@ export default function Deck() {
     }
 
     if (counter === 1) {
-      const match = calculateMatch(matchArr[0], matchArr[1]);
-      console.log({ match });
+      //   console.log(matchArr);
+      const match = calculateMatch(matchArr[0], picObj.id);
+      //   console.log({ match });
+      if (match) {
+        setMatched([...matched, picObj.id]);
+      }
       setCounter(0);
       setMatchArr([]);
       await sleep(1000);
       setChecked([]);
     }
-    console.log({ memoryDeck });
+  }
+
+  useEffect(() => {
+    calculateWin();
+  }, [matched]);
+
+  function calculateWin() {
+    const length = deckObj.length;
+    console.log(deckObj.length);
+    let winCounter = 0;
+    deckObj.forEach((item) => {
+      if (matched.indexOf(item.id) !== -1) {
+        winCounter++;
+      }
+    });
+    if (winCounter === length) {
+      setWin(true);
+    }
+    return false;
   }
 
   return (
     <DeckContainer>
-      {deckObj.map((picObj, index) => (
-        <Cards
-          handleClick={() => handleClick(picObj)}
-          imgSrc={picObj.src}
-          key={index}
-          checked={checked}
-          picObj={picObj}
-        />
-      ))}
+      {win && (
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/qvIcny1DFjY?controls=0"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title="video"
+        ></iframe>
+      )}
+      {!win &&
+        deckObj.map((picObj, index) => (
+          <Cards
+            handleClick={() => handleClick(picObj)}
+            imgSrc={picObj.src}
+            key={index}
+            checked={checked}
+            picObj={picObj}
+            matched={matched}
+            disabled={checked.indexOf(picObj.uid) !== -1}
+          />
+        ))}
     </DeckContainer>
   );
 }
