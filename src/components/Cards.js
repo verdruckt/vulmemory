@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 
-export default function Cards({ imgSrc, handleClick, memLen }) {
-  const [clicked, setClicked] = useState(false);
-
+export default function Cards({ imgSrc, handleClick, checked, picObj }) {
+  console.log({ checked });
   return (
     <CardContainer
-      active={clicked}
+      active={checked.indexOf(picObj.uid) !== -1}
       onClick={() => {
         handleClick();
-        setClicked(!clicked);
       }}
     >
-      <div active={clicked} />
+      <div active={checked} />
       <img src={imgSrc} alt="Bild" />
     </CardContainer>
   );

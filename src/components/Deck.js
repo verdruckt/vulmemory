@@ -15,23 +15,29 @@ const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
 const deckObj = generateDeck(pics);
 export default function Deck() {
   const [memoryDeck, setMemoryDeck] = useState(deckObj);
-  const [memory, setMemory] = useState([]);
-  const [counter, setCounter] = useState(1);
+  const [matchArr, setMatchArr] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [checked, setChecked] = useState([]);
 
-  function handleClick(picObj) {
+  async function handleClick(picObj) {
+    setMatchArr([...matchArr, picObj.id]);
+    if (checked.indexOf(picObj.uid) === -1) {
+      setChecked([...checked, picObj.uid]);
+    } else {
+      setChecked(checked.filter((item) => item !== picObj.uid));
+    }
     if (counter === 0) {
-      setMemory([...memory, picObj.id]);
       setMemoryDeck([...memoryDeck, !picObj.clicked]);
       setCounter(counter + 1);
     }
 
     if (counter === 1) {
-      setMemory([...memory, picObj.id]);
-
-      const match = calculateMatch(memory[0], memory[1]);
+      const match = calculateMatch(matchArr[0], matchArr[1]);
       console.log({ match });
-      setCounter(1);
-      setMemory([]);
+      setCounter(0);
+      setMatchArr([]);
+      await sleep(1000);
+      setChecked([]);
     }
     console.log({ memoryDeck });
   }
@@ -43,12 +49,14 @@ export default function Deck() {
           handleClick={() => handleClick(picObj)}
           imgSrc={picObj.src}
           key={index}
-          memLen={memory.length}
+          checked={checked}
+          picObj={picObj}
         />
       ))}
     </DeckContainer>
   );
 }
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 function generateDeck(cardArray) {
   const halfArr = cardArray.map((img, id) => ({
@@ -59,7 +67,12 @@ function generateDeck(cardArray) {
   }));
 
   const objArr = [...halfArr, ...halfArr];
-  return randomize(objArr);
+  const result = objArr.map((obj) => ({
+    ...obj,
+    uid: Math.floor(Math.random() * 9999),
+  }));
+  //   console.log(result);
+  return randomize(result);
 }
 
 function randomize(Arr) {
