@@ -31,6 +31,8 @@ const CardContainer = styled.button`
   width: 200px;
   height: 200px;
   position: relative;
+  background: none;
+  border: none;
   div {
     transition: all 500ms ease-in-out;
     border: 5px dotted gold;

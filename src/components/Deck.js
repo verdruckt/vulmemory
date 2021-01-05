@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import pic2 from "../assets/vulvis/2.jpg";
-import pic3 from "../assets/vulvis/3.jpg";
-import pic1 from "../assets/vulvis/1.jpg";
-import pic4 from "../assets/vulvis/4.jpg";
-import pic5 from "../assets/vulvis/5.jpg";
-import pic6 from "../assets/vulvis/6.jpg";
-import pic7 from "../assets/vulvis/7.jpg";
-import pic8 from "../assets/vulvis/8.jpg";
+import pic2 from "../assets/2.jpg";
+import pic3 from "../assets/3.jpg";
+import pic1 from "../assets/1.jpg";
+import pic4 from "../assets/4.jpg";
+import pic5 from "../assets/5.jpg";
+import pic6 from "../assets/6.jpg";
+import pic7 from "../assets/7.jpg";
+import pic8 from "../assets/8.jpg";
 import calculateMatch from "../lib/calculateMatch";
 import Cards from "./Cards";
 
@@ -23,6 +23,7 @@ export default function Deck() {
 
   async function handleClick(picObj) {
     setMatchArr([...matchArr, picObj.id]);
+    setCounter(counter + 1);
     if (checked.indexOf(picObj.uid) === -1) {
       setChecked([...checked, picObj.uid]);
     } else {
@@ -30,19 +31,19 @@ export default function Deck() {
     }
     if (counter === 0) {
       setMemoryDeck([...memoryDeck, !picObj.clicked]);
-      setCounter(counter + 1);
     }
 
     if (counter === 1) {
       //   console.log(matchArr);
+
       const match = calculateMatch(matchArr[0], picObj.id);
       //   console.log({ match });
       if (match) {
         setMatched([...matched, picObj.id]);
       }
-      setCounter(0);
       setMatchArr([]);
       await sleep(1000);
+      setCounter(0);
       setChecked([]);
     }
   }
@@ -87,7 +88,7 @@ export default function Deck() {
             checked={checked}
             picObj={picObj}
             matched={matched}
-            disabled={checked.indexOf(picObj.uid) !== -1}
+            disabled={checked.indexOf(picObj.uid) !== -1 || counter >= 2}
           />
         ))}
     </DeckContainer>
