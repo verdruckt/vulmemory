@@ -1,76 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-import pic2 from "../assets/2.jpg";
-import pic3 from "../assets/3.jpg";
-import pic1 from "../assets/1.jpg";
-import pic4 from "../assets/4.jpg";
-import pic5 from "../assets/5.jpg";
-import pic6 from "../assets/6.jpg";
-import pic7 from "../assets/7.jpg";
-import pic8 from "../assets/8.jpg";
+
 import calculateMatch from "../lib/calculateMatch";
 import Cards from "./Cards";
-import { checkForAinB, generateDeck, sleepFor } from "../lib/deckFunctions";
+import { checkForAinB, sleepFor } from "../lib/deckFunctions";
 
-const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
-
-export default function Deck() {
-  const [counter, setCounter] = useState(0);
-  const [cardDeck, setCardDeck] = useState(generateDeck(pics));
-  const [matchArr, setMatchArr] = useState([]);
-  const [checked, setChecked] = useState([]);
-  const [allMatched, setAllMatched] = useState([]);
-  const [win, setWin] = useState(false);
-
-  useEffect(() => {
-    function calculateWin(cardDeck) {
-      let winCounter = 0;
-      cardDeck.forEach((item) => {
-        if (allMatched.indexOf(item.id) !== -1) {
-          winCounter++;
-        }
-      });
-      if (winCounter === cardDeck.length) {
-        setWin(true);
-        return true;
-      }
-      setWin(false);
-      return false;
-    }
-    calculateWin(cardDeck);
-  }, [cardDeck, allMatched]);
-
+export default function Deck({
+  cardDeck,
+  handleCardDeckChange,
+  addRound,
+  addCount,
+  counter,
+  resetCounter,
+  matchArr,
+  checked,
+  allMatched,
+  win,
+  handleMatchArrChange,
+  handleAllMatchedChange,
+  handleCheckedChange,
+}) {
   const deckWithReverseClick = (picObj) => {
     return cardDeck.map((card) => {
-      if (card.uid === picObj.ui) {
+      if (card.uid === picObj.uid) {
         card.clicked = !card.clicked;
       }
       return card;
     });
   };
+
   async function handleClick(picObj) {
-    setMatchArr([...matchArr, picObj.id]);
-    setCounter(counter + 1);
+    handleMatchArrChange([...matchArr, picObj.id]);
+    addCount();
 
     if (!checkForAinB(picObj.uid, checked)) {
-      setChecked([...checked, picObj.uid]);
+      handleCheckedChange([...checked, picObj.uid]);
     } else {
-      setChecked(checked.filter((item) => item !== picObj.uid));
+      handleCheckedChange(checked.filter((item) => item !== picObj.uid));
     }
     if (counter === 0) {
-      setCardDeck(deckWithReverseClick(picObj));
+      handleCardDeckChange(deckWithReverseClick(picObj));
     }
 
     if (counter === 1) {
       const match = calculateMatch(matchArr[0], picObj.id);
       if (match) {
-        setAllMatched([...allMatched, picObj.id]);
+        handleAllMatchedChange([...allMatched, picObj.id]);
       }
-      setMatchArr([]);
+      handleMatchArrChange([]);
 
       await sleepFor(1000);
-      setCounter(0);
-      setChecked([]);
+      addRound();
+      resetCounter();
+      handleCheckedChange([]);
     }
   }
   return (

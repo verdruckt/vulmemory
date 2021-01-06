@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Menu = () => {
+const Menu = ({ round, handleRestart }) => {
   return (
     <MenuWrapper>
       <a href="/#">Home</a>
       <a href="/#">Timer</a>
-      <a href="/#">Round #</a>
-      <button>Restart</button>
+      <a href="/#">Round #{round}</a>
+      <button onClick={handleRestart}>Restart</button>
     </MenuWrapper>
   );
 };

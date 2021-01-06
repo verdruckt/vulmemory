@@ -11,7 +11,6 @@ export const generateDeck = (cardArray) => {
     ...obj,
     uid: Math.floor(Math.random() * 9999),
   }));
-  //   console.log(result);
   return randomize(result);
 };
 
@@ -26,7 +25,10 @@ const randomize = (Arr) => {
   return result;
 };
 
-export const checkForAinB = (A, B) => B.indexOf(A) !== -1;
+export const checkForAinB = (A, B) => {
+  console.log(A, B);
+  return B?.indexOf(A) !== -1;
+};
 
 export const sleepFor = (delay) =>
   new Promise((resolve) => setTimeout(resolve, delay));
