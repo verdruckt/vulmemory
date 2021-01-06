@@ -71,13 +71,13 @@ function App() {
   };
 
   const handleRestart = async () => {
-    toggleTimer();
     if (isActive) {
+      toggleTimer();
       setMatchArr([]);
       setAllMatched([]);
       setChecked([]);
       resetCounter();
-      await sleepFor(1000);
+      // await sleepFor(1000);
       setRound(0);
       setCardDeck(generateDeck(pics));
       resetTimer();

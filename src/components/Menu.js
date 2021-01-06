@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Timer from "./Timer";
+import RestartImg from "../assets/restart.svg";
 
 const Menu = ({ round, handleRestart, seconds, handleSeconds, isActive }) => {
   return (
@@ -12,7 +13,7 @@ const Menu = ({ round, handleRestart, seconds, handleSeconds, isActive }) => {
         isActive={isActive}
       />
       <a href="/#">Round #{round}</a>
-      <button onClick={handleRestart}>Restart</button>
+      <img src={RestartImg} alt="Restart" onClick={handleRestart} />
     </MenuWrapper>
   );
 };
@@ -27,6 +28,9 @@ const MenuWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   box-shadow: 0 10px 7px #00000038;
+  img {
+    height: 40px;
+  }
   > * {
     color: #f3f3f3;
     background: none;

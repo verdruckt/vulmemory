@@ -54,7 +54,7 @@ export default function Deck({
       }
       handleMatchArrChange([]);
 
-      await sleepFor(1000);
+      // await sleepFor(1000);
       addRound();
       resetCounter();
       handleCheckedChange([]);
