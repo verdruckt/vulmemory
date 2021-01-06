@@ -71,8 +71,8 @@ function App() {
   };
 
   const handleRestart = async () => {
-    toggleTimer();
     if (isActive) {
+      toggleTimer();
       setMatchArr([]);
       setAllMatched([]);
       setChecked([]);
