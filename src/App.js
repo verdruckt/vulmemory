@@ -7,26 +7,18 @@ import GlobalStyle from "./GlobalStyles";
 import Background from "./components/Background";
 import Menu from "./components/Menu";
 import { generateDeck, sleepFor } from "./lib/deckFunctions";
-import pic1 from "./assets/1.jpg";
-import pic2 from "./assets/2.jpg";
-import pic3 from "./assets/3.jpg";
-import pic4 from "./assets/4.jpg";
-import pic5 from "./assets/5.jpg";
-import pic6 from "./assets/6.jpg";
-import pic7 from "./assets/7.jpg";
-import pic8 from "./assets/8.jpg";
-import { waitFor } from "@testing-library/react";
-const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+import pics from "./lib/getPics";
 
 function App() {
   const [cardDeck, setCardDeck] = useState(generateDeck(pics));
   const [round, setRound] = useState(0);
   const [counter, setCounter] = useState(0);
-  console.log(cardDeck);
   const [matchArr, setMatchArr] = useState([]);
   const [checked, setChecked] = useState([]);
   const [allMatched, setAllMatched] = useState([]);
   const [win, setWin] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     function calculateWin(cardDeck) {
@@ -64,29 +56,60 @@ function App() {
   const resetCounter = () => {
     setCounter(0);
   };
+  const toggleTimer = () => {
+    function toggle() {
+      setIsActive(!isActive);
+    }
+    toggle();
+  };
+  const resetTimer = () => {
+    function reset() {
+      setSeconds(0);
+      setIsActive(false);
+    }
+    reset();
+  };
+
   const handleRestart = async () => {
-    setMatchArr([]);
-    setAllMatched([]);
-    setChecked([]);
-    resetCounter();
-    await sleepFor(1000);
-    setRound(0);
-    setCardDeck(generateDeck(pics));
+    toggleTimer();
+    if (isActive) {
+      setMatchArr([]);
+      setAllMatched([]);
+      setChecked([]);
+      resetCounter();
+      await sleepFor(1000);
+      setRound(0);
+      setCardDeck(generateDeck(pics));
+      resetTimer();
+    }
   };
 
   const addCount = () => {
     setCounter(counter + 1);
   };
-
+  const handleSeconds = (input) => {
+    setSeconds(input);
+  };
+  const handleIsActive = (input) => {
+    setIsActive(input);
+  };
   return (
     <Fragment>
       <GlobalStyle />
 
       <Wrapper>
-        <Menu round={round} handleRestart={handleRestart} />
+        <Menu
+          round={round}
+          handleRestart={handleRestart}
+          seconds={seconds}
+          handleSeconds={handleSeconds}
+          isActive={isActive}
+        />
         <Board>
           <Deck
             win={win}
+            handleIsActive={handleIsActive}
+            isActive={isActive}
             matchArr={matchArr}
             handleMatchArrChange={handleMatchArrChange}
             checked={checked}

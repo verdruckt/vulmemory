@@ -8,6 +8,8 @@ import { checkForAinB, sleepFor } from "../lib/deckFunctions";
 export default function Deck({
   cardDeck,
   handleCardDeckChange,
+  isActive,
+  handleIsActive,
   addRound,
   addCount,
   counter,
@@ -30,6 +32,9 @@ export default function Deck({
   };
 
   async function handleClick(picObj) {
+    if (!isActive) {
+      handleIsActive(true);
+    }
     handleMatchArrChange([...matchArr, picObj.id]);
     addCount();
 

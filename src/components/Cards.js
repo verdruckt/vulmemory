@@ -13,8 +13,6 @@ export default function Cards({
   const activated =
     checkForAinB(picObj.uid, checked) || checkForAinB(picObj.id, matched);
 
-  console.log({ picObj, checked, matched });
-
   return (
     <CardContainer
       active={activated}

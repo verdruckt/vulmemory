@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import Timer from "./Timer";
 
-const Menu = ({ round, handleRestart }) => {
+const Menu = ({ round, handleRestart, seconds, handleSeconds, isActive }) => {
   return (
     <MenuWrapper>
       <a href="/#">Home</a>
-      <a href="/#">Timer</a>
+      <Timer
+        seconds={seconds}
+        handleSeconds={handleSeconds}
+        isActive={isActive}
+      />
       <a href="/#">Round #{round}</a>
       <button onClick={handleRestart}>Restart</button>
     </MenuWrapper>

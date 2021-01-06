@@ -26,7 +26,6 @@ const randomize = (Arr) => {
 };
 
 export const checkForAinB = (A, B) => {
-  console.log(A, B);
   return B?.indexOf(A) !== -1;
 };
 
