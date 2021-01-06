@@ -34,6 +34,11 @@ const CardContainer = styled.button`
   position: relative;
   background: none;
   border: none;
+  transition: all 0.5s ease-in-out;
+
+  :hover {
+    transform: scale(1.1);
+  }
   div {
     transition: all 500ms ease-in-out;
     border: 5px dotted gold;
