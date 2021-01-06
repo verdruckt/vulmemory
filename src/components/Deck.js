@@ -10,63 +10,69 @@ import pic7 from "../assets/7.jpg";
 import pic8 from "../assets/8.jpg";
 import calculateMatch from "../lib/calculateMatch";
 import Cards from "./Cards";
+import { checkForAinB, generateDeck, sleepFor } from "../lib/deckFunctions";
 
 const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
-const deckObj = generateDeck(pics);
+
 export default function Deck() {
-  const [memoryDeck, setMemoryDeck] = useState(deckObj);
-  const [matchArr, setMatchArr] = useState([]);
   const [counter, setCounter] = useState(0);
+  const [cardDeck, setCardDeck] = useState(generateDeck(pics));
+  const [matchArr, setMatchArr] = useState([]);
   const [checked, setChecked] = useState([]);
-  const [matched, setMatched] = useState([]);
+  const [allMatched, setAllMatched] = useState([]);
   const [win, setWin] = useState(false);
 
+  useEffect(() => {
+    function calculateWin(cardDeck) {
+      let winCounter = 0;
+      cardDeck.forEach((item) => {
+        if (allMatched.indexOf(item.id) !== -1) {
+          winCounter++;
+        }
+      });
+      if (winCounter === cardDeck.length) {
+        setWin(true);
+        return true;
+      }
+      setWin(false);
+      return false;
+    }
+    calculateWin(cardDeck);
+  }, [cardDeck, allMatched]);
+
+  const deckWithReverseClick = (picObj) => {
+    return cardDeck.map((card) => {
+      if (card.uid === picObj.ui) {
+        card.clicked = !card.clicked;
+      }
+      return card;
+    });
+  };
   async function handleClick(picObj) {
     setMatchArr([...matchArr, picObj.id]);
     setCounter(counter + 1);
-    if (checked.indexOf(picObj.uid) === -1) {
+
+    if (!checkForAinB(picObj.uid, checked)) {
       setChecked([...checked, picObj.uid]);
     } else {
       setChecked(checked.filter((item) => item !== picObj.uid));
     }
     if (counter === 0) {
-      setMemoryDeck([...memoryDeck, !picObj.clicked]);
+      setCardDeck(deckWithReverseClick(picObj));
     }
 
     if (counter === 1) {
-      //   console.log(matchArr);
-
       const match = calculateMatch(matchArr[0], picObj.id);
-      //   console.log({ match });
       if (match) {
-        setMatched([...matched, picObj.id]);
+        setAllMatched([...allMatched, picObj.id]);
       }
       setMatchArr([]);
-      await sleep(1000);
+
+      await sleepFor(1000);
       setCounter(0);
       setChecked([]);
     }
   }
-
-  useEffect(() => {
-    calculateWin();
-  }, [matched]);
-
-  function calculateWin() {
-    const length = deckObj.length;
-    console.log(deckObj.length);
-    let winCounter = 0;
-    deckObj.forEach((item) => {
-      if (matched.indexOf(item.id) !== -1) {
-        winCounter++;
-      }
-    });
-    if (winCounter === length) {
-      setWin(true);
-    }
-    return false;
-  }
-
   return (
     <DeckContainer>
       {win && (
@@ -80,47 +86,19 @@ export default function Deck() {
         ></iframe>
       )}
       {!win &&
-        deckObj.map((picObj, index) => (
+        cardDeck.map((picObj, index) => (
           <Cards
             handleClick={() => handleClick(picObj)}
             imgSrc={picObj.src}
             key={index}
             checked={checked}
             picObj={picObj}
-            matched={matched}
-            disabled={checked.indexOf(picObj.uid) !== -1 || counter >= 2}
+            matched={allMatched}
+            disabled={checkForAinB(picObj.uid, checked) || counter >= 2}
           />
         ))}
     </DeckContainer>
   );
-}
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-
-function generateDeck(cardArray) {
-  const halfArr = cardArray.map((img, id) => ({
-    id,
-    src: img,
-    clicked: false,
-    match: false,
-  }));
-
-  const objArr = [...halfArr, ...halfArr];
-  const result = objArr.map((obj) => ({
-    ...obj,
-    uid: Math.floor(Math.random() * 9999),
-  }));
-  //   console.log(result);
-  return randomize(result);
-}
-
-function randomize(Arr) {
-  const result = [];
-  while (Arr.length > 0) {
-    const num = Math.floor(Math.random() * Arr.length);
-    result.push(...Arr.splice(num, 1));
-  }
-
-  return result;
 }
 
 const DeckContainer = styled.div`

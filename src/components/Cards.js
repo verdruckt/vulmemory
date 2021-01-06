@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
+import { checkForAinB } from "../lib/deckFunctions";
 
 export default function Cards({
   imgSrc,
@@ -10,12 +11,12 @@ export default function Cards({
   disabled,
 }) {
   const activated =
-    checked.indexOf(picObj.uid) !== -1 || matched.indexOf(picObj.id) !== -1;
-  const done = matched.indexOf(picObj.id) !== -1;
+    checkForAinB(picObj.uid, checked) || checkForAinB(picObj.id, matched);
+
   return (
     <CardContainer
       active={activated}
-      done={done}
+      done={checkForAinB(picObj.id, matched)}
       disabled={disabled}
       onClick={() => {
         handleClick();
