@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
+  const timeGone = seconds - startTime;
+
   useEffect(() => {
     let interval = null;
     if (isActive) {
@@ -12,7 +14,7 @@ const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
     }
     return () => clearInterval(interval);
   }, [isActive, seconds, handleSeconds]);
-  const timeGone = seconds - startTime;
+
   return (
     <div className="app">
       <div className="time">{timeGone}s</div>
