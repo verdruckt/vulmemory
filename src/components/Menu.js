@@ -9,40 +9,51 @@ const Menu = ({
   seconds,
   handleSeconds,
   isActive,
-  allMatched,
+  player,
+  player1Pairs,
+  player2Pairs,
 }) => {
   return (
     <MenuWrapper>
-      <a href="https://test.themoonshinepack.com/vv/index.html#">Home</a>
-      <Timer
-        seconds={seconds}
-        handleSeconds={handleSeconds}
-        isActive={isActive}
-      />
-      <a href="/#">Round #{round}</a>
-      <span>{allMatched.length} pairs found</span>
-      <img src={RestartImg} alt="Restart" onClick={handleRestart} />
+      <Controls>
+        <a href="https://test.themoonshinepack.com/vv/index.html#">Home</a>
+        <span>{player}</span>
+        <img src={RestartImg} alt="Restart" onClick={handleRestart} />
+      </Controls>
+      <hr />
+      <Stats>
+        <Timer
+          seconds={seconds}
+          handleSeconds={handleSeconds}
+          isActive={isActive}
+        />
+        <a href="/#">Round #{round}</a>
+        <span>P1: {player1Pairs.length}</span>
+        <span>P2: {player2Pairs.length}</span>
+      </Stats>
+      <hr />
     </MenuWrapper>
   );
 };
 
 export default Menu;
-
 const MenuWrapper = styled.div`
   width: 100%;
+  box-shadow: 0 10px 7px #00000038;
   margin: 1rem auto;
+  padding-bottom: 0.5rem;
+`;
 
+const Controls = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 10px 7px #00000038;
   img {
     height: 40px;
     height: clamp(30px, 2vw, 40px);
     margin: 0.5rem;
   }
-  span {
-  }
+
   > * {
     color: #f3f3f3;
     background: none;
@@ -54,6 +65,16 @@ const MenuWrapper = styled.div`
 
     :hover {
       transform: scale(1.2);
+    }
+  }
+`;
+const Stats = styled(Controls)`
+  > * {
+    transition: all 0.5s ease-in-out;
+
+    :hover {
+      text-shadow: 1px solid rebeccapurple;
+      transform: none;
     }
   }
 `;

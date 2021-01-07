@@ -29,8 +29,7 @@ export default function Cards({
 }
 
 const CardContainer = styled.button`
-  width: 200px;
-  height: 200px;
+  width: 80%;
   position: relative;
   background: none;
   border: none;

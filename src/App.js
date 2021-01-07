@@ -8,6 +8,7 @@ import Background from "./components/Background";
 import Menu from "./components/Menu";
 import { generateDeck, sleepFor } from "./lib/deckFunctions";
 import pics from "./lib/getPics";
+import { PLAYER1 } from "./lib/playerLogic";
 
 function App() {
   const [cardDeck, setCardDeck] = useState(generateDeck(pics));
@@ -19,7 +20,10 @@ function App() {
   const [win, setWin] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  console.log({ matchArr, checked, allMatched });
+  const [player, setPlayer] = useState(PLAYER1);
+  const [player1Pairs, setPlayer1Pairs] = useState([]);
+  const [player2Pairs, setPlayer2Pairs] = useState([]);
+
   useEffect(() => {
     function calculateWin(cardDeck) {
       let winCounter = 0;
@@ -79,6 +83,8 @@ function App() {
       resetCounter();
       await sleepFor(1000);
       setRound(0);
+      setPlayer1Pairs([]);
+      setPlayer2Pairs([]);
       setCardDeck(generateDeck(pics));
       resetTimer();
     }
@@ -93,6 +99,16 @@ function App() {
   const handleIsActive = (input) => {
     setIsActive(input);
   };
+
+  const handlePlayerChange = (input) => {
+    setPlayer(input);
+  };
+  const handlePlayer1Pairs = (input) => {
+    setPlayer1Pairs(input);
+  };
+  const handlePlayer2Pairs = (input) => {
+    setPlayer2Pairs(input);
+  };
   return (
     <Fragment>
       <GlobalStyle />
@@ -106,6 +122,9 @@ function App() {
           allMatched={allMatched}
           handleSeconds={handleSeconds}
           isActive={isActive}
+          player={player}
+          player1Pairs={player1Pairs}
+          player2Pairs={player2Pairs}
         />
         <Board>
           <Deck
@@ -124,6 +143,12 @@ function App() {
             counter={counter}
             addCount={addCount}
             resetCounter={resetCounter}
+            player={player}
+            handlePlayerChange={handlePlayerChange}
+            player1Pairs={player1Pairs}
+            player2Pairs={player2Pairs}
+            handlePlayer1Pairs={handlePlayer1Pairs}
+            handlePlayer2Pairs={handlePlayer2Pairs}
           />
         </Board>
       </Wrapper>
