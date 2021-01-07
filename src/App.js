@@ -18,12 +18,12 @@ function App() {
   const [checked, setChecked] = useState([]);
   const [allMatched, setAllMatched] = useState([]);
   const [win, setWin] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(null);
+  const [startTime, setStartTime] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [player, setPlayer] = useState(PLAYER1);
   const [player1Pairs, setPlayer1Pairs] = useState([]);
   const [player2Pairs, setPlayer2Pairs] = useState([]);
-  const [startTime, setStartTime] = useState(null);
 
   useEffect(() => {
     function calculateWin(cardDeck) {
@@ -80,7 +80,7 @@ function App() {
       setPlayer1Pairs([]);
       setPlayer2Pairs([]);
       setCardDeck(generateDeck(pics));
-      setStartTime(0);
+      setStartTime(null);
       setIsActive(false);
     }
   };
@@ -149,6 +149,7 @@ function App() {
             handlePlayer1Pairs={handlePlayer1Pairs}
             handlePlayer2Pairs={handlePlayer2Pairs}
             handleStartTime={handleStartTime}
+            handleSeconds={handleSeconds}
           />
         </Board>
       </Wrapper>

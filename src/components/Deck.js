@@ -29,6 +29,7 @@ export default function Deck({
   handlePlayer1Pairs,
   handlePlayer2Pairs,
   handleStartTime,
+  handleSeconds,
 }) {
   const deckWithReverseClick = (picObj) => {
     return cardDeck.map((card) => {
@@ -42,6 +43,7 @@ export default function Deck({
   async function handleClick(picObj) {
     if (!isActive) {
       handleIsActive(true);
+      handleSeconds(new Date().getTime());
       handleStartTime(new Date().getTime());
     }
     handleMatchArrChange([...matchArr, picObj.id]);

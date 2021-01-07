@@ -3,8 +3,7 @@ import React, { useEffect } from "react";
 const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
   const timeGone = seconds - startTime;
 
-  let secs = Math.floor((timeGone % (1000 * 60)) / 1000);
-  console.log(secs);
+  let secs = (time) => Math.floor((time % (1000 * 60)) / 1000);
 
   useEffect(() => {
     let interval = null;
@@ -20,7 +19,7 @@ const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
 
   return (
     <div className="app">
-      <div className="time">{secs}s</div>
+      <div className="time">{secs(timeGone)}s</div>
     </div>
   );
 };
