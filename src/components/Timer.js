@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 
-const Timer = ({ seconds, handleSeconds, isActive }) => {
+const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
+  const timeGone = seconds - startTime;
+
+  let secs = (time) => Math.floor((time % (1000 * 60)) / 1000);
+
   useEffect(() => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        handleSeconds((seconds) => seconds + 1);
+        handleSeconds(new Date().getTime());
       }, 1000);
-    } else if (!isActive && seconds !== 0) {
+    } else if (!isActive) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
@@ -15,7 +19,7 @@ const Timer = ({ seconds, handleSeconds, isActive }) => {
 
   return (
     <div className="app">
-      <div className="time">{seconds}s</div>
+      <div className="time">{secs(timeGone)}s</div>
     </div>
   );
 };

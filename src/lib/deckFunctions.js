@@ -7,10 +7,13 @@ export const generateDeck = (cardArray) => {
   }));
 
   const objArr = [...halfArr, ...halfArr];
-  const result = objArr.map((obj) => ({
+
+  const firstTry = objArr.map((obj) => ({
     ...obj,
     uid: Math.floor(Math.random() * 9999),
   }));
+
+  const result = randomize(firstTry);
   return randomize(result);
 };
 
