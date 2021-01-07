@@ -23,6 +23,11 @@ function App() {
   const [player, setPlayer] = useState(PLAYER1);
   const [player1Pairs, setPlayer1Pairs] = useState([]);
   const [player2Pairs, setPlayer2Pairs] = useState([]);
+  let startTime = null;
+
+  useEffect(() => {
+    startTime = new Date().getTime();
+  }, []);
 
   useEffect(() => {
     function calculateWin(cardDeck) {
@@ -116,6 +121,7 @@ function App() {
       <Wrapper>
         <Title>Memory3000</Title>
         <Menu
+          startTime={startTime}
           round={round}
           handleRestart={handleRestart}
           seconds={seconds}

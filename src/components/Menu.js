@@ -7,6 +7,7 @@ const Menu = ({
   round,
   handleRestart,
   seconds,
+  startTime,
   handleSeconds,
   isActive,
   player,
@@ -24,6 +25,7 @@ const Menu = ({
       <Stats>
         <Timer
           seconds={seconds}
+          startTime={startTime}
           handleSeconds={handleSeconds}
           isActive={isActive}
         />
