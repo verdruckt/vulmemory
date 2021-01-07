@@ -19,7 +19,7 @@ function App() {
   const [win, setWin] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-
+  console.log({ matchArr, checked, allMatched });
   useEffect(() => {
     function calculateWin(cardDeck) {
       let winCounter = 0;
@@ -98,10 +98,12 @@ function App() {
       <GlobalStyle />
 
       <Wrapper>
+        <Title>Memory3000</Title>
         <Menu
           round={round}
           handleRestart={handleRestart}
           seconds={seconds}
+          allMatched={allMatched}
           handleSeconds={handleSeconds}
           isActive={isActive}
         />
@@ -138,5 +140,9 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
 `;
-
+const Title = styled.h1`
+  color: white;
+  padding: 0.5rem;
+  margin: 0.5rem;
+`;
 export default App;
