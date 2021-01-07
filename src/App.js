@@ -23,11 +23,7 @@ function App() {
   const [player, setPlayer] = useState(PLAYER1);
   const [player1Pairs, setPlayer1Pairs] = useState([]);
   const [player2Pairs, setPlayer2Pairs] = useState([]);
-  let startTime = null;
-
-  useEffect(() => {
-    startTime = new Date().getTime();
-  }, []);
+  const [startTime, setStartTime] = useState(null);
 
   useEffect(() => {
     function calculateWin(cardDeck) {
@@ -71,13 +67,6 @@ function App() {
     }
     toggle();
   };
-  const resetTimer = () => {
-    function reset() {
-      setSeconds(0);
-      setIsActive(false);
-    }
-    reset();
-  };
 
   const handleRestart = async () => {
     if (isActive) {
@@ -91,7 +80,8 @@ function App() {
       setPlayer1Pairs([]);
       setPlayer2Pairs([]);
       setCardDeck(generateDeck(pics));
-      resetTimer();
+      setStartTime(0);
+      setIsActive(false);
     }
   };
 
@@ -113,6 +103,9 @@ function App() {
   };
   const handlePlayer2Pairs = (input) => {
     setPlayer2Pairs(input);
+  };
+  const handleStartTime = (input) => {
+    setStartTime(input);
   };
   return (
     <Fragment>
@@ -155,6 +148,7 @@ function App() {
             player2Pairs={player2Pairs}
             handlePlayer1Pairs={handlePlayer1Pairs}
             handlePlayer2Pairs={handlePlayer2Pairs}
+            handleStartTime={handleStartTime}
           />
         </Board>
       </Wrapper>
