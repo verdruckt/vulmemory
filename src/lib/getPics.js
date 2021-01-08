@@ -7,5 +7,17 @@ import pic6 from "../assets/6.jpg";
 import pic7 from "../assets/7.jpg";
 import pic8 from "../assets/8.jpg";
 
-const pics = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
-export default pics;
+const getPics = (squareSize) => {
+  let pics = (squareSize * squareSize) / 2;
+  const all = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
+  const choosen = [];
+
+  for (pics; pics > 0; pics--) {
+    const index = Math.floor(Math.random() * all.length);
+    choosen.push(all.splice(index, 1));
+  }
+  console.log(choosen);
+  return choosen;
+};
+
+export default getPics;
