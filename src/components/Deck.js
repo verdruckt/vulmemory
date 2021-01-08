@@ -91,19 +91,18 @@ export default function Deck({
   };
   return (
     <DeckContainer>
-      {!win &&
-        cardDeck.map((picObj, index) => (
-          <Cards
-            handleClick={() => handleClick(picObj)}
-            imgSrc={picObj.src}
-            key={index}
-            checked={checked}
-            picObj={picObj}
-            matched={allMatched}
-            disabled={checkForAinB(picObj.uid, checked) || counter >= 2}
-          />
-        ))}
-      {win && (
+      {cardDeck.map((picObj, index) => (
+        <Cards
+          handleClick={() => handleClick(picObj)}
+          imgSrc={picObj.src}
+          key={index}
+          checked={checked}
+          picObj={picObj}
+          matched={allMatched}
+          disabled={checkForAinB(picObj.uid, checked) || counter >= 2}
+        />
+      ))}
+      {/* {win && (
         <WinnerScreen>
           <h3>{winner()} won!!</h3>
           <iframe
@@ -115,7 +114,7 @@ export default function Deck({
             title="video"
           ></iframe>
         </WinnerScreen>
-      )}
+      )} */}
     </DeckContainer>
   );
 }
