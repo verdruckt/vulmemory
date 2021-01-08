@@ -7,11 +7,12 @@ import GlobalStyle from "./GlobalStyles";
 import Background from "./components/Background";
 import Menu from "./components/Menu";
 import { generateDeck, sleepFor } from "./lib/deckFunctions";
-import pics from "./lib/getPics";
+import getPics from "./lib/getPics";
 import { PLAYER1 } from "./lib/playerLogic";
 
 function App() {
-  const [cardDeck, setCardDeck] = useState(generateDeck(pics));
+  const [setUp, setSetUp] = useState(false);
+  const [cardDeck, setCardDeck] = useState([]);
   const [round, setRound] = useState(0);
   const [counter, setCounter] = useState(0);
   const [matchArr, setMatchArr] = useState([]);
@@ -79,7 +80,7 @@ function App() {
       setRound(0);
       setPlayer1Pairs([]);
       setPlayer2Pairs([]);
-      setCardDeck(generateDeck(pics));
+      setCardDeck(generateDeck(getPics));
       setStartTime(null);
       setIsActive(false);
     }
@@ -107,6 +108,8 @@ function App() {
   const handleStartTime = (input) => {
     setStartTime(input);
   };
+
+  const boardSizes = [4, 6, 8];
   return (
     <Fragment>
       <GlobalStyle />
@@ -125,33 +128,48 @@ function App() {
           player1Pairs={player1Pairs}
           player2Pairs={player2Pairs}
         />
-        <Board>
-          <Deck
-            win={win}
-            handleIsActive={handleIsActive}
-            isActive={isActive}
-            matchArr={matchArr}
-            handleMatchArrChange={handleMatchArrChange}
-            checked={checked}
-            handleCheckedChange={handleCheckedChange}
-            allMatched={allMatched}
-            handleAllMatchedChange={handleAllMatchedChange}
-            cardDeck={cardDeck}
-            handleCardDeckChange={handleCardDeckChange}
-            addRound={addRound}
-            counter={counter}
-            addCount={addCount}
-            resetCounter={resetCounter}
-            player={player}
-            handlePlayerChange={handlePlayerChange}
-            player1Pairs={player1Pairs}
-            player2Pairs={player2Pairs}
-            handlePlayer1Pairs={handlePlayer1Pairs}
-            handlePlayer2Pairs={handlePlayer2Pairs}
-            handleStartTime={handleStartTime}
-            handleSeconds={handleSeconds}
-          />
-        </Board>
+        {setUp === false ? (
+          <>
+            {boardSizes.map((size) => (
+              <button
+                onClick={() => {
+                  setCardDeck(generateDeck(getPics(size)));
+                  setSetUp(true);
+                }}
+              >
+                {size}x{size}
+              </button>
+            ))}
+          </>
+        ) : (
+          <Board>
+            <Deck
+              win={win}
+              handleIsActive={handleIsActive}
+              isActive={isActive}
+              matchArr={matchArr}
+              handleMatchArrChange={handleMatchArrChange}
+              checked={checked}
+              handleCheckedChange={handleCheckedChange}
+              allMatched={allMatched}
+              handleAllMatchedChange={handleAllMatchedChange}
+              cardDeck={cardDeck}
+              handleCardDeckChange={handleCardDeckChange}
+              addRound={addRound}
+              counter={counter}
+              addCount={addCount}
+              resetCounter={resetCounter}
+              player={player}
+              handlePlayerChange={handlePlayerChange}
+              player1Pairs={player1Pairs}
+              player2Pairs={player2Pairs}
+              handlePlayer1Pairs={handlePlayer1Pairs}
+              handlePlayer2Pairs={handlePlayer2Pairs}
+              handleStartTime={handleStartTime}
+              handleSeconds={handleSeconds}
+            />
+          </Board>
+        )}
       </Wrapper>
       <Background />
     </Fragment>
