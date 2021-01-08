@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { checkForAinB } from "../lib/deckFunctions";
+import { PLAYER1 } from "../lib/playerLogic";
 
 export default function Cards({
   imgSrc,
@@ -9,12 +10,14 @@ export default function Cards({
   picObj,
   matched,
   disabled,
+  player,
 }) {
   const activated =
     checkForAinB(picObj.uid, checked) || checkForAinB(picObj.id, matched);
 
   return (
     <CardContainer
+      player={player}
       active={activated}
       done={checkForAinB(picObj.id, matched)}
       disabled={disabled}
@@ -42,7 +45,12 @@ const CardContainer = styled.button`
     transition: all 500ms ease-in-out;
     border: 5px dotted gold;
     box-sizing: border-box;
-    background-color: ${(props) => (props.active ? "transparent" : "#de37e1")};
+    background-color: ${(props) =>
+      props.active
+        ? "transparent"
+        : props.player === PLAYER1
+        ? "rebeccapurple"
+        : "#e258b4"};
     width: 100%;
     height: 100%;
     position: absolute;

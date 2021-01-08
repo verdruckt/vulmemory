@@ -100,6 +100,7 @@ export default function Deck({
             checked={checked}
             picObj={picObj}
             matched={allMatched}
+            player={player}
             disabled={checkForAinB(picObj.uid, checked) || counter >= 2}
           />
         ))}
