@@ -11,7 +11,7 @@ import pics from "./lib/getPics";
 import { PLAYER1 } from "./lib/playerLogic";
 
 function App() {
-  const [cardDeck, setCardDeck] = useState(generateDeck(pics));
+  const [cardDeck, setCardDeck] = useState();
   const [round, setRound] = useState(0);
   const [counter, setCounter] = useState(0);
   const [matchArr, setMatchArr] = useState([]);
@@ -26,14 +26,18 @@ function App() {
   const [player2Pairs, setPlayer2Pairs] = useState([]);
 
   useEffect(() => {
+    setNewCardDeck(pics);
+  }, []);
+
+  useEffect(() => {
     function calculateWin(cardDeck) {
       let winCounter = 0;
-      cardDeck.forEach((item) => {
+      cardDeck?.forEach((item) => {
         if (allMatched.indexOf(item.id) !== -1) {
           winCounter++;
         }
       });
-      if (winCounter === cardDeck.length) {
+      if (winCounter === cardDeck?.length) {
         setWin(true);
         return true;
       }
@@ -42,6 +46,11 @@ function App() {
     }
     calculateWin(cardDeck);
   }, [cardDeck, allMatched]);
+
+  const setNewCardDeck = async () => {
+    const tempDeck = await generateDeck(await pics);
+    setCardDeck(tempDeck);
+  };
 
   const addRound = () => {
     setRound(round + 1);
@@ -79,7 +88,7 @@ function App() {
       setRound(0);
       setPlayer1Pairs([]);
       setPlayer2Pairs([]);
-      setCardDeck(generateDeck(pics));
+      setCardDeck(await generateDeck(await pics));
       setStartTime(null);
       setIsActive(false);
     }
