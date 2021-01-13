@@ -11,11 +11,13 @@ import { searchNewPicture } from "./api";
 export const picsLocal = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8];
 let picNum = 8;
 
-const pics = () => {
+const pics = async () => {
   let picArray = [];
   for (let i = picNum; i > 0; i--) {
-    const picURL = searchNewPicture();
-    picArray.push(picURL);
+    console.log("mee");
+    const picURL = await searchNewPicture();
+    console.log(picURL);
+    // picArray.push(picURL);
   }
   console.log({ picArray });
   return picArray;

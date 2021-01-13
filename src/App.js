@@ -26,10 +26,13 @@ function App() {
   const [player2Pairs, setPlayer2Pairs] = useState([]);
 
   useEffect(() => {
-    const newPics = pics();
-    const deck = generateDeck(newPics);
-
-    setCardDeck(deck);
+    async function doStuff() {
+      const newPics = await pics();
+      console.log(newPics);
+      const deck = generateDeck(newPics);
+      setCardDeck(deck);
+    }
+    doStuff();
   }, []);
 
   // console.log(cardDeck);
