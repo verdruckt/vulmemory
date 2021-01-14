@@ -92,7 +92,7 @@ export default function Deck({
   return (
     <DeckContainer>
       {!win &&
-        cardDeck.map((picObj, index) => (
+        cardDeck?.map((picObj, index) => (
           <Cards
             handleClick={() => handleClick(picObj)}
             imgSrc={picObj.src}

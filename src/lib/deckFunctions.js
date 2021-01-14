@@ -1,5 +1,5 @@
-export const generateDeck = (cardArray) => {
-  const halfArr = cardArray.map((img, id) => ({
+export const generateDeck = async (cardArray) => {
+  const halfArr = await cardArray.map((img, id) => ({
     id,
     src: img,
     clicked: false,
