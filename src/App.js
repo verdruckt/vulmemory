@@ -4,7 +4,6 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import Deck from "./components/Deck";
 import GlobalStyle from "./GlobalStyles";
-import Background from "./components/Background";
 import Menu from "./components/Menu";
 import { generateDeck, sleepFor } from "./lib/deckFunctions";
 import pics from "./lib/getPics";
@@ -121,7 +120,7 @@ function App() {
       <GlobalStyle />
 
       <Wrapper>
-        <Title>Memory3000</Title>
+        <Title>Vulvemory</Title>
         <Menu
           startTime={startTime}
           round={round}
@@ -162,14 +161,14 @@ function App() {
           />
         </Board>
       </Wrapper>
-      <Background />
     </Fragment>
   );
 }
 const Wrapper = styled.div`
   height: 100%;
   min-height: 100vh;
-  margin: 1rem;
+  max-width: 800px;
+  margin: 1rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 
 const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
   const timeGone = seconds - startTime;
@@ -18,10 +19,13 @@ const Timer = ({ seconds, handleSeconds, isActive, startTime }) => {
   }, [isActive, seconds, handleSeconds]);
 
   return (
-    <div className="app">
+    <TimerWrapper>
       <div className="time">{secs(timeGone)}s</div>
-    </div>
+    </TimerWrapper>
   );
 };
 
+const TimerWrapper = styled.div`
+color: white
+`
 export default Timer;

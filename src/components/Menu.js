@@ -14,24 +14,15 @@ const Menu = ({
   player1Pairs,
   player2Pairs,
 }) => {
+  console.log(player)
   return (
     <MenuWrapper>
-      <Controls>
-        <a href="https://test.themoonshinepack.com/vv/index.html#">Home</a>
-        <span>{player}</span>
-        <img src={RestartImg} alt="Restart" onClick={handleRestart} />
-      </Controls>
-      <hr />
       <Stats>
-        <Timer
-          seconds={seconds}
-          startTime={startTime}
-          handleSeconds={handleSeconds}
-          isActive={isActive}
-        />
-        <a href="/#">Round #{round}</a>
-        <span>P1: {player1Pairs.length}</span>
-        <span>P2: {player2Pairs.length}</span>
+      <a href="https://test.themoonshinepack.com/vv/index.html#">Zurück</a>
+        <a href="/#">Runde {round}</a>
+        <Player player={player}>P1: {player1Pairs.length}</Player>
+        <Player2 player={player}>P2: {player2Pairs.length}</Player2>
+        <img src={RestartImg} alt="Restart" onClick={handleRestart} />
       </Stats>
       <hr />
     </MenuWrapper>
@@ -39,6 +30,14 @@ const Menu = ({
 };
 
 export default Menu;
+const Player = styled.span`
+color: ${props=>props.player === "Player 1" ? "red": "white"};
+font-weight: ${props=>props.player === "Player 1" ? "bold": "normal"}
+`
+const Player2 = styled(Player)`
+color: ${props=>props.player === "Player 2" ? "red": "white"};
+font-weight: ${props=>props.player === "Player 2" ? "bold": "normal"}
+`
 const MenuWrapper = styled.div`
   width: 100%;
   box-shadow: 0 10px 7px #00000038;
@@ -55,9 +54,12 @@ const Controls = styled.div`
     height: clamp(30px, 2vw, 40px);
     margin: 0.5rem;
   }
+ a {
+    font-size: 1rem;
+    color: #f3f3f3;
+  }
 
   > * {
-    color: #f3f3f3;
     background: none;
     border: none;
     font-size: 1.2rem;
@@ -71,6 +73,9 @@ const Controls = styled.div`
   }
 `;
 const Stats = styled(Controls)`
+  a {
+    font-size:1.5rem;
+  }
   > * {
     transition: all 0.5s ease-in-out;
 

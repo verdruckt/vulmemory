@@ -32,25 +32,23 @@ export default function Cards({
 }
 
 const CardContainer = styled.button`
-  width: 80%;
   position: relative;
   background: none;
   border: none;
   transition: all 0.5s ease-in-out;
 
   :hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   div {
     transition: all 500ms ease-in-out;
-    border: 5px dotted gold;
     box-sizing: border-box;
     background-color: ${(props) =>
       props.active
         ? "transparent"
         : props.player === PLAYER1
-        ? "rebeccapurple"
-        : "#e258b4"};
+        ? "var(--card-color)"
+        : "var(--card-color-2)"};
     width: 100%;
     height: 100%;
     position: absolute;

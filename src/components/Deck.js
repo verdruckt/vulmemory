@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components/macro";
+import React from 'react';
+import styled from 'styled-components/macro';
 
-import calculateMatch from "../lib/calculateMatch";
-import Cards from "./Cards";
-import { checkForAinB, sleepFor } from "../lib/deckFunctions";
-import { changePlayer, PLAYER1, PLAYER2 } from "../lib/playerLogic";
+import calculateMatch from '../lib/calculateMatch';
+import Cards from './Cards';
+import { checkForAinB, sleepFor } from '../lib/deckFunctions';
+import { changePlayer, PLAYER1, PLAYER2 } from '../lib/playerLogic';
 
 export default function Deck({
   cardDeck,
@@ -81,7 +81,7 @@ export default function Deck({
   }
   const winner = () => {
     if (player1Pairs.length === player2Pairs.length) {
-      return "This is a draw";
+      return 'This is a draw';
     }
     if (player1Pairs.length > player2Pairs.length) {
       return PLAYER1;
@@ -108,13 +108,12 @@ export default function Deck({
         <WinnerScreen>
           <h3>{winner()} won!!</h3>
           <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/qvIcny1DFjY?controls=0"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            title="video"
-          ></iframe>
+            width='560'
+            height='315'
+            src='https://www.youtube.com/embed/qvIcny1DFjY?controls=0'
+            frameborder='0'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            title='video'></iframe>
         </WinnerScreen>
       )}
     </DeckContainer>
@@ -123,9 +122,16 @@ export default function Deck({
 
 const DeckContainer = styled.div`
   display: grid;
-  align-items: center;
+  grid-gap: 0;
+  grid-template-columns: repeat(4, [col] 20vw);
+  grid-template-rows: repeat(4, [row] 20vw);
+  width: 80vw;
+  justify-content: center;
+  align-content: center;
+  margin: 0 auto;
+
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  max-width: 800px;
 `;
 const WinnerScreen = styled.div`
   display: flex;
